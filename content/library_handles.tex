@@ -21,6 +21,20 @@ are performed on the world team.
 See Section~\ref{subsec:team} for more detail about its use.
 \tabularnewline \hline
 %%
+\LibHandleDecl{SHMEM\_TEAM\_CPU} &
+Handle of type \CTYPE{shmem\_team\_t} that corresponds to the 
+team that can access the CPU symmetric heap. It is available when
+\LibHandleRef{SHMEM\_SPACE\_CPU} is enabled.
+See Section~\ref{subsec:team} for more detail about its use.
+\tabularnewline \hline
+%%
+\LibHandleDecl{SHMEM\_TEAM\_GPU} &
+Handle of type \CTYPE{shmem\_team\_t} that corresponds to the 
+team that can access the GPU symmetric heap. It is available when
+\LibHandleRef{SHMEM\_SPACE\_GPU} is enabled.
+See Section~\ref{subsec:team} for more detail about its use.
+\tabularnewline \hline
+%%
 \LibHandleDecl{SHMEM\_TEAM\_SHARED} &
 Handle of type \CTYPE{shmem\_team\_t} that corresponds to a team of \acp{PE}
 that share a memory domain.  \LibHandleRef{SHMEM\_TEAM\_SHARED} refers to
@@ -39,6 +53,26 @@ default communication context.  All point-to-point communication operations
 and synchronizations that do not specify a context are performed on the
 default context.
 See Section~\ref{sec:ctx} for more detail about its use.
+\tabularnewline \hline
+%%
+\LibHandleDecl{SHMEM\_SPACE\_DEFAULT} &
+A memory space handle representing the default symmetric heap. This
+space aliases to either \LibHandleRef{SHMEM\_SPACE\_CPU} or\LibHandleRef{SHMEM\_SPACE\_GPU} based
+on implementation choice or user configuration via the
+\ENVVAR{SHMEM\_DEFAULT\_SPACE} environment variable. This space is
+used for memory allocated via shmem\_malloc.
+\tabularnewline \hline
+%%
+\LibHandleDecl{SHMEM\_SPACE\_GPU} &
+Handle of type \CTYPE{shmem\_space\_t} that corresponds to a symmetric
+heap in GPU (device) memory. If the GPU space is not available
+(e.g. disabled or not supported), this handle is set to \LibConstRef{SHMEM\_SPACE\_INVALID}.
+\tabularnewline \hline
+%%
+\LibHandleDecl{SHMEM\_SPACE\_CPU} &
+Handle of type \CTYPE{shmem\_space\_t} that corresponds to a symmetric
+heap in CPU (host) memory. If the CPU space is not available
+(e.g. disabled or not supported), this handle is set to \LibConstRef{SHMEM\_SPACE\_INVALID}.
 \tabularnewline \hline
 %%
 \end{longtable}

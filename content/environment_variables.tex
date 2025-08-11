@@ -14,7 +14,7 @@ Refer to the \ENVVAR{SMA\_*} environment variables deprecation rationale,
 
 \medskip{}
 
-\begin{longtable}{|p{0.260\textwidth}|p{0.145\textwidth}|p{0.50\textwidth}|}
+\begin{longtable}{|p{0.360\textwidth}|p{0.145\textwidth}|p{0.50\textwidth}|}
 \hline
 \textbf{Variable} & \textbf{Value} & \textbf{Description}
 \tabularnewline\hline
@@ -31,8 +31,17 @@ Refer to the \ENVVAR{SMA\_*} environment variables deprecation rationale,
 %%
 \EnvVarDecl{SHMEM\_SYMMETRIC\_SIZE}
     & Non-negative integer or floating point value with an optional character
-    suffix
-    & Specifies the size (in bytes) of the symmetric heap memory per \ac{PE}.
+    suffiximport itertools
+
+mat = sum([1 for c in itertools.product([1,2,3,4,5,6],repeat=4) if (c[0] + c[1]) == (c[2] + c[3])])
+tot = 6 * 6 * 6 * 6
+
+print(tot, mat, mat/tot)
+
+    & Specifies the size (in bytes) of the symmetric heap memory per
+    \ac{PE}.
+    This applies to \LibHandleRef{SHMEM\_SPACE\_DEFAULT} and maintains
+    backward compatibility with existing OpenSHMEM applications.
     The resulting size is implementation-defined and must be at least as large as
     the integer ceiling of the product of the numeric prefix and the scaling
     factor. The allowed character suffixes for the scaling factor are as
@@ -54,6 +63,68 @@ Refer to the \ENVVAR{SMA\_*} environment variables deprecation rationale,
       An invalid value for \ENVVAR{SHMEM\_SYMMETRIC\_SIZE} is an error, which the
       \openshmem library shall report by either returning a nonzero value from
       \FUNC{shmem\_init\_thread} or causing program termination.
+    \tabularnewline\hline
+%%
+\EnvVarDecl{SHMEM\_CPU\_SYMMETRIC\_SIZE}
+    & Non-negative integer or floating point value with an optional character
+    suffiximport itertools
+
+mat = sum([1 for c in itertools.product([1,2,3,4,5,6],repeat=4) if (c[0] + c[1]) == (c[2] + c[3])])
+tot = 6 * 6 * 6 * 6
+
+print(tot, mat, mat/tot)
+
+    & Specifies the size (in bytes) of the CPU symmetric heap memory per \ac{PE}.
+    The resulting size is implementation-defined and must be at least as large as
+    the integer ceiling of the product of the numeric prefix and the scaling
+    factor. The allowed character suffixes for the scaling factor are as
+    follows:
+      \begin{itemize}
+        \item k or K multiplies by \(2^{10}\)  (kibibytes)
+        \item m or M multiplies by \(2^{20}\)  (mebibytes)
+        \item g or G multiplies by \(2^{30}\)  (gibibytes)
+        \item t or T multiplies by \(2^{40}\)  (tebibytes)
+      \end{itemize}
+    \tabularnewline\hline
+%%
+\EnvVarDecl{SHMEM\_GPU\_SYMMETRIC\_SIZE}
+    & Non-negative integer or floating point value with an optional character
+    suffiximport itertools
+
+mat = sum([1 for c in itertools.product([1,2,3,4,5,6],repeat=4) if (c[0] + c[1]) == (c[2] + c[3])])
+tot = 6 * 6 * 6 * 6
+
+print(tot, mat, mat/tot)
+
+    & Specifies the size (in bytes) of the GPU symmetric heap memory per \ac{PE}.
+    The resulting size is implementation-defined and must be at least as large as
+    the integer ceiling of the product of the numeric prefix and the scaling
+    factor. The allowed character suffixes for the scaling factor are as
+    follows:
+      \begin{itemize}
+        \item k or K multiplies by \(2^{10}\)  (kibibytes)
+        \item m or M multiplies by \(2^{20}\)  (mebibytes)
+        \item g or G multiplies by \(2^{30}\)  (gibibytes)
+        \item t or T multiplies by \(2^{40}\)  (tebibytes)
+      \end{itemize}
+    \tabularnewline\hline
+%%
+\EnvVarDecl{SHMEM\_ENABLE\_CPU\_SPACE}
+    & Any
+    & Enables CPU symmetric heap. When not set or empty, CPU symmetric
+    heap is disabled.
+    \tabularnewline\hline
+%%
+\EnvVarDecl{SHMEM\_ENABLE\_GPU\_SPACE}
+    & Any
+    & Enables GPU symmetric heap. When not set or empty, GPU symmetric
+    heap is disabled.
+    \tabularnewline\hline
+%%
+\EnvVarDecl{SHMEM\_DEFAULT\_SPACE}
+    & CPU or GPU
+    & Controls whether \LibHandleRef{SHMEM\_DEFAULT\_SPACE} alias to
+    \LibHandleRef{SHMEM\_SPACE\_CPU} or \LibHandleRef{SHMEM\_SPACE\_GPU}.
     \tabularnewline\hline
 %%
 \EnvVarDecl{SHMEM\_DEBUG}
