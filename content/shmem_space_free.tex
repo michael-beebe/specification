@@ -1,5 +1,5 @@
 \apisummary{
-  Collectively deallocate symmetric memory.
+  Collectively deallocate symmetric memory in a specific space.
 }
 
 \begin{apidefinition}
@@ -9,6 +9,7 @@ void @\FuncDecl{shmem\_space\_free}@(shmem_space_t space, void *ptr);
 \end{Csynopsis}
 
 \begin{apiarguments}
+  \apiargument{IN}{space}{Space handle from which ptr was allocated.}
   \apiargument{IN}{ptr}{Symmetric address of an object in the given space.}
 \end{apiarguments}
 
