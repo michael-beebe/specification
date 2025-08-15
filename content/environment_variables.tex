@@ -33,8 +33,7 @@ Refer to the \ENVVAR{SMA\_*} environment variables deprecation rationale,
     & Non-negative integer or floating point value with an optional character
       suffix
     & Specifies the size (in bytes) of the symmetric heap memory per \ac{PE}
-      for \LibHandleRef{SHMEM\_SPACE\_DEFAULT} to maintain backward compatibility
-      with existing OpenSHMEM applications. The resulting size is
+      for \LibHandleRef{SHMEM\_SPACE\_DEFAULT}. The resulting size is
       implementation-defined and must be at least as large as the integer
       ceiling of the product of the numeric prefix and the scaling factor.
       The allowed character suffixes for the scaling factor are:
@@ -57,7 +56,7 @@ Refer to the \ENVVAR{SMA\_*} environment variables deprecation rationale,
       implementation-defined and must be at least as large as the integer
       ceiling of the product of the numeric prefix and the scaling factor.
       The allowed character suffixes are as in \ENVVAR{SHMEM\_SYMMETRIC\_SIZE}.
-      Device tokens are implementation-defined (e.g., CPU, GPU, HBM, SmartNIC).
+      Device tokens are implementation-defined.
     \tabularnewline\hline
 %%
 \EnvVarDecl{SHMEM\_ENABLE\_<DEVICE>}

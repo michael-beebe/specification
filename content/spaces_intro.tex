@@ -1,0 +1,93 @@
+The \openshmem spaces facility introduces named symmetric heaps associated with
+particular memory domains, referred to as \emph{device spaces}. These spaces
+enable applications to allocate symmetric memory in heterogeneous memory domains.
+
+\subsubsection*{Default Space and Backward Compatibility}
+
+Implementations may provide a default space that legacy allocation routines use
+for backward compatibility. Legacy allocation routines are collective
+operations over \LibHandleRef{SHMEM\_TEAM\_WORLD}. When a default space is
+provided, the traditional \FUNC{shmem\_malloc} and \FUNC{shmem\_calloc}
+routines allocate from the
+default symmetric heap, which is accessed through the
+\LibHandleRef{SHMEM\_SPACE\_DEFAULT} handle. The default space may alias to an
+implementation-selected device space \LibHandleRef{SHMEM\_SPACE\_<DEVICE>}
+based on implementation choice or user configuration via
+\ENVVAR{SHMEM\_DEFAULT\_SPACE}. If not set, the implementation chooses any
+default space it provides. When a default space exists, it shall be
+world-accessible (its associated team equals \LibHandleRef{SHMEM\_TEAM\_WORLD})
+to preserve the semantics of legacy collectives; otherwise, \openshmem
+initialization shall fail.
+
+\subsubsection*{Predefined Memory Spaces}
+
+An \openshmem memory space may be predefined (i.e., provided by the
+\openshmem library). Implementations choose which spaces they support; they are
+not required to support any particular space. All predefined memory spaces are
+valid for the duration of the \openshmem portion of an application. All valid
+memory spaces contain at least one symmetric memory region.
+
+\subsubsection*{Space Handles}
+
+A memory space handle is an opaque object with type \CTYPE{shmem\_space\_t}
+that is used to reference a memory space. Memory space handles are not
+remotely accessible objects. The predefined memory spaces may be accessed via
+handles such as \LibHandleRef{SHMEM\_SPACE\_DEFAULT} and
+\LibHandleRef{SHMEM\_SPACE\_<DEVICE>}. A memory space handle may be
+initialized to or assigned the value \LibConstRef{SHMEM\_SPACE\_INVALID} to
+indicate that the handle does not reference a valid memory space. Applications
+can use an equality comparison to test whether a given space handle references
+a valid memory space.
+
+\subsubsection*{Memory Space Properties and Sizing}
+
+Each memory space can have associated properties including size limits and
+accessibility constraints.
+
+\begin{itemize}
+  \item \ENVVAR{SHMEM\_SYMMETRIC\_SIZE}: sizes the default symmetric heap
+    (\LibHandleRef{SHMEM\_SPACE\_DEFAULT}).
+  \item \ENVVAR{SHMEM\_<DEVICE>\_SYMMETRIC\_SIZE}: sizes the symmetric heap
+  for \LibHandleRef{SHMEM\_SPACE\_<DEVICE>} per \ac{PE}. The allowed suffixes
+  and error semantics are as described for \ENVVAR{SHMEM\_SYMMETRIC\_SIZE}.
+\end{itemize}
+
+When \LibHandleRef{SHMEM\_SPACE\_DEFAULT} aliases to
+\LibHandleRef{SHMEM\_SPACE\_<DEVICE>}, the
+\ENVVAR{SHMEM\_<DEVICE>\_SYMMETRIC\_SIZE} environment variable takes
+precedence over \ENVVAR{SHMEM\_SYMMETRIC\_SIZE} if both are set. If no size
+environment variables are set for a space, the implementation chooses the
+default size for that space.
+
+\subsubsection*{Space Enablement and Availability}
+
+Implementations may enable one or more spaces by default at initialization
+under environment variable control. Enabling a space makes its handle valid and
+its symmetric heap available according to sizing variables. A space may be
+designated as the default alias \LibHandleRef{SHMEM\_SPACE\_DEFAULT}; when a
+default exists, legacy routines (\FUNC{shmem\_malloc}, \FUNC{shmem\_calloc})
+operate on that default alias.
+The default alias refers to exactly one enabled space at any time; it does not
+span multiple spaces. Multiple spaces may be enabled concurrently, but only one
+may be the default alias.
+
+- \ENVVAR{SHMEM\_ENABLE\_<DEVICE>}: enables the symmetric heap for the
+  named device space for the process. When not set or empty for a given
+  \textit{<DEVICE>}, that device's symmetric heap is disabled.
+
+\LibHandleRef{SHMEM\_SPACE\_<DEVICE>} is available when the corresponding
+device space is enabled and the device or memory domain for \textit{<DEVICE>}
+is detected and accessible. When a space is not available (e.g., disabled or
+not supported), the corresponding space handle is set to
+\LibConstRef{SHMEM\_SPACE\_INVALID}. All environment variables that control
+memory space enablement, sizing, and default selection shall have identical
+values across all \acp{PE} in the job; otherwise, \openshmem initialization
+shall fail.
+
+\subsubsection*{Relationship to Teams}
+
+When a device space is enabled and accessible, the corresponding predefined
+team \LibHandleRef{SHMEM\_TEAM\_<DEVICE>} contains exactly those \acp{PE} that
+can access that space. See Section~\ref{subsec:team} for discussion of
+device-specific teams.
+

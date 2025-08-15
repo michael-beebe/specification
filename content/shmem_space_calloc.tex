@@ -1,0 +1,46 @@
+\apisummary{
+  Collectively allocate a zeroed block of symmetric memory in a specific space.
+}
+
+\begin{apidefinition}
+
+\begin{Csynopsis}
+void *@\FuncDecl{shmem\_space\_calloc}@(shmem_space_t space, size_t count, size_t size);
+\end{Csynopsis}
+
+\begin{apiarguments}
+  \apiargument{IN}{space}{The space within which to allocate.}
+  \apiargument{IN}{count}{The number of elements to allocate.}
+  \apiargument{IN}{size}{The size in bytes of each element to allocate.}
+\end{apiarguments}
+
+\apidescription{
+  The \FUNC{shmem\_space\_calloc} routine is a collective operation on the
+  team associated with \VAR{space}. It allocates a region of
+  remotely-accessible symmetric memory for an array of \VAR{count} objects of
+  \VAR{size} bytes each from the symmetric heap identified by \VAR{space}, and
+  returns the symmetric address of the lowest byte of the allocated symmetric
+  memory. The space is initialized to all bits zero.
+
+  If the allocation succeeds, the pointer returned shall be suitably aligned so
+  that it may be assigned to a pointer to any type of object. If the allocation
+  does not succeed, or either \VAR{count} or \VAR{size} is \CONST{0}, the
+  return value is a null pointer.
+
+  The values of the \VAR{space}, \VAR{count}, and \VAR{size} arguments must be
+  identical on all \acp{PE}; otherwise, the behavior is undefined.
+
+  When \VAR{count} or \VAR{size} is \CONST{0}, the \FUNC{shmem\_space\_calloc}
+  routine returns without performing a barrier; otherwise,
+  \FUNC{shmem\_space\_calloc} calls a procedure that is semantically
+  equivalent to \FUNC{shmem\_team\_sync} on exit.
+}
+
+\apireturnvalues{
+  The \FUNC{shmem\_space\_calloc} routine returns the symmetric address of the
+  allocated space; otherwise, it returns a null pointer.
+}
+
+\end{apidefinition}
+
+

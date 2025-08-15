@@ -37,7 +37,7 @@ See Section~\ref{subsec:team} for more detail about its use.
 Handle of type \CTYPE{shmem\_team\_t} that corresponds to the
 team of \acp{PE} that can access the symmetric heap for \textit{<DEVICE>}.
 It is available when \LibHandleRef{SHMEM\_SPACE\_<DEVICE>} is enabled and accessible.
-Device tokens are implementation-defined (e.g., CPU, GPU, etc.).
+Device tokens are implementation-defined.
 See Section~\ref{subsec:space} for more detail about its use.
 \tabularnewline \hline
 %%
@@ -61,8 +61,7 @@ See Section~\ref{subsec:space} for more detail about its use.
 Handle of type \CTYPE{shmem\_space\_t} that corresponds to a symmetric
 heap in the memory domain associated with \textit{<DEVICE>}. If the space
 for \textit{<DEVICE>} is not available (e.g., disabled or not supported), this handle
-is set to \LibConstRef{SHMEM\_SPACE\_INVALID}. Device tokens are implementation-defined
-(e.g., CPU, GPU, HBM, SmartNIC).
+is set to \LibConstRef{SHMEM\_SPACE\_INVALID}. Device tokens are implementation-defined.
 See Section~\ref{subsec:space} for more detail about its use.
 \tabularnewline \hline
 %%

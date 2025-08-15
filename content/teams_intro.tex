@@ -100,3 +100,26 @@ occur in the same order on all \acp{PE} in the parent team.
 Upon completion of a team creation operation, the parent and any resulting child teams
 will be immediately usable for any team-based operations, including creating new child
 teams, without any intervening synchronization.
+
+\subsubsection*{Device-Specific Teams}
+
+The handle \LibHandleRef{SHMEM\_TEAM\_<DEVICE>} refers to the team of \acp{PE}
+that can access the symmetric heap associated with the corresponding
+\LibHandleRef{SHMEM\_SPACE\_<DEVICE>}. Membership in this team is
+implementation-defined and reflects hardware capability and runtime setup.
+
+When the corresponding device space is usable, the implementation initializes
+\LibHandleRef{SHMEM\_TEAM\_<DEVICE>} to include exactly those \acp{PE} for
+which the device space is accessible. A \ac{PE} that cannot access the device
+space is not a member of this team. If the device space is unavailable, the
+handle value is \LibConstRef{SHMEM\_TEAM\_INVALID}. See
+Section~\ref{subsec:space} for details of device spaces and their
+configuration.
+
+Applications may use \LibHandleRef{SHMEM\_TEAM\_<DEVICE>} to scope collective
+operations or to create contexts and perform point-to-point operations among
+only those \acp{PE} that share access to the corresponding device space. All
+collective semantics and ordering requirements discussed above apply to these
+device-specific teams; a collective on \LibHandleRef{SHMEM\_TEAM\_<DEVICE>}
+must be invoked by all \acp{PE} that are members of that team and by no
+others.
