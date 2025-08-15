@@ -665,6 +665,24 @@ standard \ac{AMO} types in Table~\ref{stdamotypes}.
 
 \chapter{Changes to this Document}\label{sec:changelog}
 
+\section{Version 1.7}
+\label{changelog:v1.7}
+
+Major changes in \openshmem[1.7] include the addition of spaces, which enable
+applications to allocate symmetric memory in heterogeneous memory domains.
+
+The following list describes the specific changes in \openshmem[1.7]:
+\begin{enumerate}
+%
+\item Added spaces, which enable applications to allocate symmetric memory in
+    heterogeneous memory domains. \ChangelogRef{subsec:space, subsec:shmem_space_calloc}%
+%
+\item Added space-specific allocation routines: \FUNC{shmem\_space\_malloc},
+    \FUNC{shmem\_space\_calloc}, and \FUNC{shmem\_space\_free}.
+\ChangelogRef{subsec:shmem_space_malloc, subsec:shmem_space_calloc, subsec:shmem_space_free}%
+%
+\end{enumerate}
+
 \section{Version 1.6}
 \label{changelog:v1.6}
 Major changes in \openshmem[1.6] include the addition of inclusive and
