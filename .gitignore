@@ -6,4 +6,7 @@ main_spec.log
 main_spec.out
 main_spec.pdf
 main_spec.toc
+main_spec.fdb_latexmk
+main_spec.fls
+main_spec.synctex.gz
 *~

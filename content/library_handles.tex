@@ -21,20 +21,6 @@ are performed on the world team.
 See Section~\ref{subsec:team} for more detail about its use.
 \tabularnewline \hline
 %%
-\LibHandleDecl{SHMEM\_TEAM\_CPU} &
-Handle of type \CTYPE{shmem\_team\_t} that corresponds to the 
-team that can access the CPU symmetric heap. It is available when
-\LibHandleRef{SHMEM\_SPACE\_CPU} is enabled.
-See Section~\ref{subsec:team} for more detail about its use.
-\tabularnewline \hline
-%%
-\LibHandleDecl{SHMEM\_TEAM\_GPU} &
-Handle of type \CTYPE{shmem\_team\_t} that corresponds to the 
-team that can access the GPU symmetric heap. It is available when
-\LibHandleRef{SHMEM\_SPACE\_GPU} is enabled.
-See Section~\ref{subsec:team} for more detail about its use.
-\tabularnewline \hline
-%%
 \LibHandleDecl{SHMEM\_TEAM\_SHARED} &
 Handle of type \CTYPE{shmem\_team\_t} that corresponds to a team of \acp{PE}
 that share a memory domain.  \LibHandleRef{SHMEM\_TEAM\_SHARED} refers to
@@ -47,6 +33,14 @@ directly load/store accessible by all \acp{PE} in the team.
 See Section~\ref{subsec:team} for more detail about its use.
 \tabularnewline \hline
 %%
+\LibHandleDecl{SHMEM\_TEAM\_<DEVICE>} &
+Handle of type \CTYPE{shmem\_team\_t} that corresponds to the
+team of \acp{PE} that can access the symmetric heap for \textit{<DEVICE>}.
+It is available when \LibHandleRef{SHMEM\_SPACE\_<DEVICE>} is enabled and accessible.
+Device tokens are implementation-defined (e.g., CPU, GPU, etc.).
+See Section~\ref{subsec:space} for more detail about its use.
+\tabularnewline \hline
+%%
 \LibHandleDecl{SHMEM\_CTX\_DEFAULT} &
 Handle of type \CTYPE{shmem\_ctx\_t} that corresponds to the
 default communication context.  All point-to-point communication operations
@@ -57,22 +51,19 @@ See Section~\ref{sec:ctx} for more detail about its use.
 %%
 \LibHandleDecl{SHMEM\_SPACE\_DEFAULT} &
 A memory space handle representing the default symmetric heap. This
-space aliases to either \LibHandleRef{SHMEM\_SPACE\_CPU} or\LibHandleRef{SHMEM\_SPACE\_GPU} based
-on implementation choice or user configuration via the
-\ENVVAR{SHMEM\_DEFAULT\_SPACE} environment variable. This space is
-used for memory allocated via shmem\_malloc.
+space aliases to some \LibHandleRef{SHMEM\_SPACE\_<DEVICE>} based
+on implementation choice or user configuration. This space is
+used for memory allocated via \FUNC{shmem\_malloc} and \FUNC{shmem\_calloc}.
+See Section~\ref{subsec:space} for more detail about its use.
 \tabularnewline \hline
 %%
-\LibHandleDecl{SHMEM\_SPACE\_GPU} &
+\LibHandleDecl{SHMEM\_SPACE\_<DEVICE>} &
 Handle of type \CTYPE{shmem\_space\_t} that corresponds to a symmetric
-heap in GPU (device) memory. If the GPU space is not available
-(e.g. disabled or not supported), this handle is set to \LibConstRef{SHMEM\_SPACE\_INVALID}.
-\tabularnewline \hline
-%%
-\LibHandleDecl{SHMEM\_SPACE\_CPU} &
-Handle of type \CTYPE{shmem\_space\_t} that corresponds to a symmetric
-heap in CPU (host) memory. If the CPU space is not available
-(e.g. disabled or not supported), this handle is set to \LibConstRef{SHMEM\_SPACE\_INVALID}.
+heap in the memory domain associated with \textit{<DEVICE>}. If the space
+for \textit{<DEVICE>} is not available (e.g., disabled or not supported), this handle
+is set to \LibConstRef{SHMEM\_SPACE\_INVALID}. Device tokens are implementation-defined
+(e.g., CPU, GPU, HBM, SmartNIC).
+See Section~\ref{subsec:space} for more detail about its use.
 \tabularnewline \hline
 %%
 \end{longtable}

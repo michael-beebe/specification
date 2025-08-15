@@ -72,6 +72,17 @@ An overview of the \openshmem routines is described below:
     numbering through team-based contexts.
 \end{enumerate}
 
+\item \textbf{Space Management}
+\begin{enumerate}
+    % TODO: refine the description of spaces
+    \item \OPR{Spaces}: Spaces are containers for symmetric memory in specific memory
+    domains. They provide the storage for \openshmem symmetric data objects and
+    define accessibility and operational properties of those objects. Allocations
+    within a space are collective and symmetric across the \acp{PE} for which the
+    space is available. Collective and communication operations operate on data
+    resident in one or more spaces as permitted by the implementation
+\end{enumerate}
+
 \item \textbf{\acf{RMA}}
 \begin{enumerate}
     \item \PUT: The local \ac{PE} specifies the \source{} data object, private
